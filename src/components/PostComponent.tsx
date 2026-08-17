@@ -5,23 +5,25 @@ import {useEffect, useState} from "react";
 
 interface PostProps {
     postsItem: PostsItem;
-    user: User | undefined;
+    user: User | undefined; // Using undefined in case there's no user by the post items userId
 }
 
-export function PostComponent({postsItem, user}:PostProps) {
-    const [showComments, setShowComments] = useState(false);
-    const [comments, setComments] = useState<Comment[]>([]);
+export function PostComponent({postsItem, user}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
+    const [showComments, setShowComments] = useState(false); // Decides if comments are shown or not
+    const [comments, setComments] = useState<Comment[]>([]); // Sets comments in each post
 
     function toggleComments() {
         setShowComments(prev => !prev);
     }
 
+    // without await, the code would try and use the data/result before it's actually loaded
     async function fetchComments() {
         const res = await fetch(`https://dummyjson.com/comments/post/${postsItem.id}`);
         const json = await res.json();
         setComments(json.comments);
     }
 
+    // Fetch comments if the showComments state is true
     useEffect(() => {
         if (showComments) {
             fetchComments();
@@ -37,30 +39,34 @@ export function PostComponent({postsItem, user}:PostProps) {
         buttonText = "Hide comments";
     }
 
-    return <div>
+    return <div style={{marginBottom: "5rem"}}>
         {user
-        ? <>{user.firstName} {user.lastName}</>
+            ? <>{user.firstName} {user.lastName}</>
             : <>Anonymous user</>}
         <br></br>
-        <h1>{postsItem.title}</h1><br></br>
+        <h2 style={{marginTop: "0.25rem"}}>{postsItem.title}</h2><br></br>
         {postsItem.body}<br></br><br></br>
-        #{postsItem.tags.join(" #")}<br></br><br></br>
-        views: {postsItem.views}
+        <span style={{color: "rgb(0, 119, 204)"}}> {/*span is used to mark a small part of the content - usually for style*/}
+            #{postsItem.tags.join(" #")}
+        </span><br></br><br></br>
+        <b>Views: {postsItem.views}</b>
         <button onClick={toggleComments}> {
             buttonText}
-            </button>
+        </button>
 
         {/*Comment section */}
         {showComments && (
             <div>
-                {comments.map(c => (
+                {/* This map renders the comments. Unlike the map in postsService,
+                it does not change the data; it turns each comment into JSX. */}
+                {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>
                     <div key={c.id}>
                         <p>{c.body}</p>
                     </div>
                 ))}
             </div>
         )}
-        <br></br><br></br><br></br>
+        <br></br>
 
     </div>
 }
