@@ -1,7 +1,6 @@
 import type {PostsItem} from "@/types/posts.tsx";
 import type {User} from "@/types/users.tsx";
 import type {Comment} from "@/types/comments.tsx";
-import {openComments} from "@/components/OpenComments.tsx";
 import {useEffect, useState} from "react";
 
 interface PostProps {
