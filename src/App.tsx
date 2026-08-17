@@ -1,23 +1,56 @@
-import { APITester } from "./APITester";
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
+import {useEffect, useState} from "react";
 
 export function App() {
-  return (
-    <div className="app">
-      <div className="logo-container">
-        <img src={logo} alt="Bun Logo" className="logo bun-logo" />
-        <img src={reactLogo} alt="React Logo" className="logo react-logo" />
-      </div>
 
-      <h1>Bun + React</h1>
-      <p>
-        Hi honey!
-      </p>
-      <APITester />
+    const [posts, setPosts] = useState<PostsItem[]>([])
+
+    useEffect(() => {
+        fetch('https://dummyjson.com/posts')
+            .then(res => res.json())
+            .then((json) => {
+                setPosts(json.posts)
+            });
+    }, []);
+
+    return (
+
+    <div>
+        {
+            posts.map(p => {
+                return <PostComponent id={p.id} title={p.title} body={p.body} tags={p.tags} reactions={p.reactions} views={p.views} userId={p.userId} />
+            })
+        }
     </div>
   );
+}
+
+function PostComponent(postsItem: PostsItem) {
+    return <div> {postsItem.title}</div>
+}
+
+export interface Reactions {
+    likes: number
+    dislikes: number
+}
+
+export interface PostsItem {
+    id: number
+    title: string
+    body: string
+    tags: string[]
+    reactions: Reactions
+    views: number
+    userId: number
+}
+
+export interface Root {
+    posts: PostsItem[]
+    total: number
+    skip: number
+    limit: number
 }
 
 export default App;
