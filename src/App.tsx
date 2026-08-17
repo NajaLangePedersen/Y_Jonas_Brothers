@@ -3,6 +3,9 @@ import logo from "./logo.svg";
 import reactLogo from "./react.svg";
 import {useEffect, useState} from "react";
 
+import type {PostsItem, Root, Reactions} from "@/types/posts.tsx";
+import {PostComponent} from "@/components/PostComponent.tsx";
+
 export function App() {
 
     const [posts, setPosts] = useState<PostsItem[]>([])
@@ -10,7 +13,7 @@ export function App() {
     useEffect(() => {
         fetch('https://dummyjson.com/posts')
             .then(res => res.json())
-            .then((json) => {
+            .then((json: Root) => {
                 setPosts(json.posts)
             });
     }, []);
@@ -26,37 +29,4 @@ export function App() {
     </div>
   );
 }
-
-function PostComponent(postsItem: PostsItem) {
-    return <div>
-        {postsItem.userId}<br></br>
-        <h1>{postsItem.title}</h1><br></br>
-        {postsItem.body}<br></br><br></br>
-        #{postsItem.tags.join(" #")}<br></br><br></br>
-        views: {postsItem.views}<br></br><br></br><br></br>
-    </div>
-}
-
-export interface Reactions {
-    likes: number
-    dislikes: number
-}
-
-export interface PostsItem {
-    id: number
-    title: string
-    body: string
-    tags: string[]
-    reactions: Reactions
-    views: number
-    userId: number
-}
-
-export interface Root {
-    posts: PostsItem[]
-    total: number
-    skip: number
-    limit: number
-}
-
 export default App;
