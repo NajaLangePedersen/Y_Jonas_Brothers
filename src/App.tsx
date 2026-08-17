@@ -1,21 +1,16 @@
 
-import logo from "./logo.svg";
-import reactLogo from "./react.svg";
 import {useEffect, useState} from "react";
 
 import type {PostsItem, Root, Reactions} from "@/types/posts.tsx";
 import {PostComponent} from "@/components/PostComponent.tsx";
+import {fetchPosts} from "@/services/postsService.tsx";
 
 export function App() {
 
     const [posts, setPosts] = useState<PostsItem[]>([])
 
     useEffect(() => {
-        fetch('https://dummyjson.com/posts')
-            .then(res => res.json())
-            .then((json: Root) => {
-                setPosts(json.posts)
-            });
+        fetchPosts().then(setPosts);
     }, []);
 
     return (
@@ -23,7 +18,7 @@ export function App() {
     <div>
         {
             posts.map(p => {
-                return <PostComponent id={p.id} title={p.title} body={p.body} tags={p.tags} reactions={p.reactions} views={p.views} userId={p.userId} />
+                return <PostComponent key={p.id} postsItem={p} user={p.user} />
             })
         }
     </div>

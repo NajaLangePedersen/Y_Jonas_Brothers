@@ -1,3 +1,5 @@
+import type {User} from "@/types/users.tsx";
+
 export interface Reactions {
     likes: number
     dislikes: number
@@ -11,6 +13,7 @@ export interface PostsItem {
     reactions: Reactions
     views: number
     userId: number
+    user?: User;
 }
 
 export interface Root {
