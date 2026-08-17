@@ -28,6 +28,15 @@ export function PostComponent({postsItem, user}:PostProps) {
         }
     }, [showComments]);
 
+    let buttonText: string;
+    if (postsItem.commentsCount === 0) {
+        buttonText = "Be the first to comment";
+    } else if (!showComments) {
+        buttonText = `Show comments (${postsItem.commentsCount})`;
+    } else {
+        buttonText = "Hide comments";
+    }
+
     return <div>
         {user
         ? <>{user.firstName} {user.lastName}</>
@@ -38,7 +47,7 @@ export function PostComponent({postsItem, user}:PostProps) {
         #{postsItem.tags.join(" #")}<br></br><br></br>
         views: {postsItem.views}
         <button onClick={toggleComments}> {
-            showComments ? "Hide comments" : "Show comments"}
+            buttonText}
             </button>
 
         {/*Comment section */}

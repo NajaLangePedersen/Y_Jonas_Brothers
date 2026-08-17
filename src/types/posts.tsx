@@ -13,7 +13,8 @@ export interface PostsItem {
     reactions: Reactions
     views: number
     userId: number
-    user?: User;
+    user?: User
+    commentsCount: number
 }
 
 export interface Root {
