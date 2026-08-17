@@ -7,12 +7,11 @@ import {useEffect, useState} from "react";
 interface PostProps {
     postsItem: PostsItem;
     user: User | undefined;
-    comments: Comment;
 }
 
-export function PostComponent({postsItem, user, comments}:PostProps) {
+export function PostComponent({postsItem, user}:PostProps) {
     const [showComments, setShowComments] = useState(false);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState<Comment[]>([]);
 
     function toggleComments() {
         setShowComments(prev => !prev);
@@ -41,14 +40,14 @@ export function PostComponent({postsItem, user, comments}:PostProps) {
         views: {postsItem.views}
         <button onClick={toggleComments}> {
             showComments ? "Hide comments" : "Show comments"}
-            Comments</button>
+            </button>
 
         {/*Comment section */}
         {showComments && (
             <div>
                 {comments.map(c => (
                     <div key={c.id}>
-
+                        <p>{c.body}</p>
                     </div>
                 ))}
             </div>
