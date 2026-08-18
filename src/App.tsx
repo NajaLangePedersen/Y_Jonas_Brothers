@@ -22,6 +22,10 @@ export function App() {
             body,
             tags.split(" ")
         )
+
+        console.log("NEW POST:", newPost)
+
+        setPosts(prevPosts => [...prevPosts, newPost])
         setShowPopup(false)
     }
 
@@ -53,26 +57,46 @@ export function App() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 backgroundColor: "white",
-                padding: "2rem",
-                border: "2px solid black",
+                padding: "4rem",
+                border: "2px solid rgb(0, 119, 204)",
                 borderRadius: "5%",
-                zIndex: 1000
+                zIndex: 1000,
+                textAlign: "center"
             }}>
-                <input
+                <h2 style={{marginTop: "0", marginBottom: "1rem"}}>What's on your mind?</h2>
+                <textarea
                     placeholder={"Title"}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                />
-                <input
+                    style={{
+                        height: "2.2rem",
+                        width: "25rem",
+                        verticalAlign: "top",
+                        marginBottom: "1rem"
+                    }}
+                /><br></br>
+                <textarea
                     placeholder={"Body"}
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
-                />
-                <input
+                    style={{
+                        height: "7rem",
+                        width: "25rem",
+                        verticalAlign: "top",
+                        marginBottom: "1rem"
+                    }}
+                /><br></br>
+                <textarea
                     placeholder={"Tags"}
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
-                />
+                    style={{
+                        height: "2.2rem",
+                        width: "25rem",
+                        verticalAlign: "top",
+                        marginBottom: "1rem"
+                    }}
+                /><br></br>
                 <button onClick={handleCreatePost}>Create post</button>
             </div>
         )}
