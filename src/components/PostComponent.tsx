@@ -6,9 +6,10 @@ import {useEffect, useState} from "react";
 interface PostProps {
     postsItem: PostsItem;
     user: User | undefined; // Using undefined in case there's no user by the post items userId
+    onDelete: () => void;
 }
 
-export function PostComponent({postsItem, user}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
+export function PostComponent({postsItem, user, onDelete}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
     const [showComments, setShowComments] = useState(false); // Decides if comments are shown or not
     const [comments, setComments] = useState<Comment[]>([]); // Sets comments in each post
 
@@ -54,6 +55,7 @@ export function PostComponent({postsItem, user}: PostProps) { //props are coming
             buttonText}
         </button>
 
+        <button onClick={onDelete}>Delete post</button>
         {/*Comment section */}
         {showComments && (
             <div>

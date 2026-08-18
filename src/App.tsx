@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 import type {PostsItem, Root, Reactions} from "@/types/posts.tsx";
 import {PostComponent} from "@/components/PostComponent.tsx";
-import {fetchPosts, createPost} from "@/services/postsService.tsx";
+import {fetchPosts, createPost, deletePost} from "@/services/postsService.tsx";
 
 export function App() {
 
@@ -29,6 +29,11 @@ export function App() {
         setShowPopup(false)
     }
 
+    async function handleDelete(id: number) {
+        await deletePost(id);
+        setPosts(prevState => prevState.filter(p => p.id !== id));
+    }
+
     useEffect(() => {
         fetchPosts().then(setPosts);
     }, []);
@@ -47,7 +52,7 @@ export function App() {
             posts
                 .filter(p => p.title.toLowerCase().includes(search.toLowerCase()) || p.body.toLowerCase().includes(search.toLowerCase()))
                 .map(p => {
-                return <PostComponent key={p.id} postsItem={p} user={p.user} />
+                return <PostComponent key={p.id} postsItem={p} user={p.user} onDelete={() => handleDelete(p.id)}/>
             })
         }
         {showPopup && (
