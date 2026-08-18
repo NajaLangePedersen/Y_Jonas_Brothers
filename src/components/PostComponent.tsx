@@ -2,6 +2,7 @@ import type {PostsItem} from "@/types/posts.tsx";
 import type {User} from "@/types/users.tsx";
 import type {Comment} from "@/types/comments.tsx";
 import {useEffect, useState} from "react";
+import {deleteComment} from "@/services/postsService.tsx";
 
 interface PostProps {
     postsItem: PostsItem;
@@ -12,6 +13,8 @@ interface PostProps {
 export function PostComponent({postsItem, user, onDelete}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
     const [showComments, setShowComments] = useState(false); // Decides if comments are shown or not
     const [comments, setComments] = useState<Comment[]>([]); // Sets comments in each post
+    const [commentsLoaded, setCommentsLoaded] = useState(false); //This keeps track of whether comments have been loaded.
+    const [commentCount, setCommentCount] = useState(postsItem.commentsCount);
 
     function toggleComments() {
         setShowComments(prev => !prev);
@@ -26,16 +29,22 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
 
     // Fetch comments if the showComments state is true
     useEffect(() => {
-        if (showComments) {
-            fetchComments();
+        if (showComments && !commentsLoaded) {
+            fetchComments().then(() => setCommentsLoaded(true));
         }
-    }, [showComments]);
+    }, [showComments, commentsLoaded]);
+
+    async function handleDeleteComment(commentId: number) {
+        await deleteComment(commentId);
+        setComments(prevState => prevState.filter(c => c.id !== commentId));
+        setCommentCount(prevState => prevState -1);
+    }
 
     let buttonText: string;
-    if (postsItem.commentsCount === 0) {
+    if (commentCount === 0) {
         buttonText = "Be the first to comment";
     } else if (!showComments) {
-        buttonText = `Show comments (${postsItem.commentsCount})`;
+        buttonText = `Show comments (${commentCount})`;
     } else {
         buttonText = "Hide comments";
     }
@@ -64,6 +73,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
                 {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>
                     <div key={c.id}>
                         <p>{c.body}</p>
+                        <button onClick={() => handleDeleteComment(c.id)}>Delete comment</button>
                     </div>
                 ))}
             </div>

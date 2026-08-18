@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 import type {PostsItem, Root, Reactions} from "@/types/posts.tsx";
 import {PostComponent} from "@/components/PostComponent.tsx";
-import {fetchPosts, createPost, deletePost} from "@/services/postsService.tsx";
+import {fetchPosts, createPost, deletePost, deleteComment} from "@/services/postsService.tsx";
 
 export function App() {
 
