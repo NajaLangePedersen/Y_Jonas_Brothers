@@ -24,4 +24,21 @@ export async function fetchPosts(): Promise<PostsItem[]> {
     return postsWithUsers;
 }
 
+export async function createPost(title: string, body: string, tags: string[]) {
+    const res = await fetch("https://dummyjson.com/posts/add", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            title: title,
+            body: body,
+            tags: tags,
+            userId: undefined
+        })
+    });
+
+    return await res.json();
+}
+
 
