@@ -82,7 +82,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
             buttonText}
         </button>
 
-        <button onClick={onDelete}>Delete post</button>
+        <button onClick={onDelete}>&#128465;</button>
         {/*Comment section */}
         {showComments && (
             <div>
@@ -101,8 +101,8 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
                 it does not change the data; it turns each comment into JSX. */}
                 {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>
                     <div key={c.id}>
-                        <p>{c.body}</p>
-                        <button onClick={() => handleDeleteComment(c.id)}>Delete comment</button>
+                        <p>{c.body} <button onClick={() => handleDeleteComment(c.id)}>&#128465;</button></p>
+
                     </div>
                 ))}
             </div>
