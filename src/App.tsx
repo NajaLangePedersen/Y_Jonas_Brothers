@@ -16,6 +16,15 @@ export function App() {
     const [body, setBody] = useState("")
     const[tags, setTags] = useState("")
 
+    const handleCreatePost = async () => {
+        const newPost = await createPost(
+            title,
+            body,
+            tags.split(" ")
+        )
+        setShowPopup(false)
+    }
+
     useEffect(() => {
         fetchPosts().then(setPosts);
     }, []);
@@ -38,19 +47,33 @@ export function App() {
             })
         }
         {showPopup && (
-            <div>
+            <div style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "white",
+                padding: "2rem",
+                border: "2px solid black",
+                borderRadius: "5%",
+                zIndex: 1000
+            }}>
                 <input
                     placeholder={"Title"}
                     value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
                 <input
                     placeholder={"Body"}
                     value={body}
+                    onChange={(e) => setBody(e.target.value)}
                 />
                 <input
                     placeholder={"Tags"}
                     value={tags}
+                    onChange={(e) => setTags(e.target.value)}
                 />
+                <button onClick={handleCreatePost}>Create post</button>
             </div>
         )}
     </div>
