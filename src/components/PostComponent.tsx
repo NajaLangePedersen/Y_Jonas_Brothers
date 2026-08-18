@@ -15,6 +15,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
     const [comments, setComments] = useState<Comment[]>([]); // Sets comments in each post
     const [commentsLoaded, setCommentsLoaded] = useState(false); //This keeps track of whether comments have been loaded.
     const [commentCount, setCommentCount] = useState(postsItem.commentsCount);
+    const [newComment, setNewComment] = useState("")
 
     function toggleComments() {
         setShowComments(prev => !prev);
@@ -49,6 +50,23 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
         buttonText = "Hide comments";
     }
 
+    async function addComment() {
+        const res = await fetch('https://dummyjson.com/comments/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                body: newComment,
+                postId: postsItem.id,
+                userId: Math.floor(Math.random()*70) +31,
+            })
+        })
+
+        const comment = await res.json()
+
+        setComments(prevComments => [comment, ...prevComments])
+        setNewComment("")
+    }
+
     return <div style={{marginBottom: "5rem"}}>
         {user
             ? <>{user.firstName} {user.lastName}</>
@@ -68,6 +86,17 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
         {/*Comment section */}
         {showComments && (
             <div>
+                <input
+                    placeholder={"Write your comment here"}
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            addComment();
+                            setCommentCount(prevCount => prevCount + 1)
+                        }
+                    }}
+                />
                 {/* This map renders the comments. Unlike the map in postsService,
                 it does not change the data; it turns each comment into JSX. */}
                 {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>

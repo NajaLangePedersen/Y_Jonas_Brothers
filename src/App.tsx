@@ -48,9 +48,17 @@ export function App() {
             placeholder={"Search"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{width: "100%"}}
+            style={{
+                width: "100%",
+                display: "block"
+            }}
         />
-        <button style={{marginBottom: "5rem", width: "100%"}} onClick={() => setShowPopup(true)}>Create post</button>
+        <button style={{
+            marginBottom: "5rem",
+            marginLeft: 0,
+            marginRight: 0,
+            width: "100%"
+        }} onClick={() => setShowPopup(true)}>Create post</button>
         {
             posts
                 .filter(p => p.title.toLowerCase().includes(search.toLowerCase()) || p.body.toLowerCase().includes(search.toLowerCase()))
