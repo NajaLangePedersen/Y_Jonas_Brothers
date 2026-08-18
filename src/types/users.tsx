@@ -8,6 +8,7 @@ export interface UserRoot {
 }
 
 export interface User {
+    fullName: string;
     id: number
     firstName: string
     lastName: string

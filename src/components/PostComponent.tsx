@@ -83,7 +83,10 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
             buttonText}
         </button>
 
-        <button onClick={onDelete}>&#128465;</button>
+        <button onClick={onDelete} style={{
+            color: "red",
+            borderColor: "red"
+        }}>Delete</button>
         {/*Comment section */}
         {showComments && (
             <div>
@@ -101,8 +104,28 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
                 {/* This map renders the comments. Unlike the map in postsService,
                 it does not change the data; it turns each comment into JSX. */}
                 {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>
-                    <div key={c.id}>
-                        <p>{c.body} <button onClick={() => handleDeleteComment(c.id)}>&#128465;</button></p>
+
+                    <div key={c.id} style={{
+                        border: "2px solid lightGrey",
+                        borderRadius: "1rem",
+                        paddingLeft: "1rem",
+                        marginBottom: "1rem"
+                    }}>
+                        <p style={{fontSize: "12px", marginBottom: "0px"}}>
+                            {c.user
+                                ? <>{c.user.fullName}</>
+                                : <>Anonymous user</>}
+                        </p>
+                        <p style={{marginTop: "0px"}}>
+                            {c.body}
+                            <button onClick={() => handleDeleteComment(c.id)} style={{
+                                color: "red",
+                                border: "none",
+                                fontSize: "20px",
+                                backgroundColor: "transparent",
+                                marginLeft: 0
+                            }}>&#128465;</button>
+                        </p>
 
                     </div>
                 ))}

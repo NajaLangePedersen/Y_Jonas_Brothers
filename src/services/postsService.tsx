@@ -10,6 +10,7 @@ export async function fetchPosts(): Promise<PostsItem[]> {
 
     const postsWithUsers = await Promise.all(
         res.posts.map(async (p: PostsItem) => {
+
             const commentsRes = await fetch(`https://dummyjson.com/comments/post/${p.id}`).
             then(r => r.json());
 
