@@ -8,6 +8,7 @@ import {fetchPosts} from "@/services/postsService.tsx";
 export function App() {
 
     const [posts, setPosts] = useState<PostsItem[]>([])
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
         fetchPosts().then(setPosts);
@@ -16,8 +17,16 @@ export function App() {
     return (
 
     <div>
+        <input
+            placeholder={"Search"}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{marginBottom: "5rem"}}
+        />
         {
-            posts.map(p => {
+            posts
+                .filter(p => p.title.toLowerCase().includes(search.toLowerCase()) || p.body.toLowerCase().includes(search.toLowerCase()))
+                .map(p => {
                 return <PostComponent key={p.id} postsItem={p} user={p.user} />
             })
         }
