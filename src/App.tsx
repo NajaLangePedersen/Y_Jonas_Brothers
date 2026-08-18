@@ -20,12 +20,15 @@ export function App() {
         const newPost = await createPost(
             title,
             body,
-            tags.split(" ")
+            tags.split(" "),
         )
 
-        console.log("NEW POST:", newPost)
+        const newPostWComments = {
+            ...newPost,
+            commentsCount: 0
+        }
 
-        setPosts(prevPosts => [...prevPosts, newPost])
+        setPosts(prevPosts => [newPostWComments, ...prevPosts])
         setShowPopup(false)
     }
 
@@ -45,9 +48,9 @@ export function App() {
             placeholder={"Search"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{marginBottom: "5rem"}}
+            style={{width: "100%"}}
         />
-        <button onClick={() => setShowPopup(true)}>Create post</button>
+        <button style={{marginBottom: "5rem", width: "100%"}} onClick={() => setShowPopup(true)}>Create post</button>
         {
             posts
                 .filter(p => p.title.toLowerCase().includes(search.toLowerCase()) || p.body.toLowerCase().includes(search.toLowerCase()))
