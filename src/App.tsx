@@ -23,10 +23,13 @@ export function App() {
             title,
             body,
             tags.split(" "),
+            currentUser ? currentUser.id : null
         )
 
         const newPostWComments = {
             ...newPost,
+            userId: currentUser ? currentUser.id : null,
+            user: currentUser ?? undefined,
             commentsCount: 0
         }
 
@@ -69,9 +72,12 @@ export function App() {
 
                     }}
             >
-                <option>
-
-                </option>
+                <option value="">Select user</option>
+                {users.map(u => (
+                    <option key={u.id} value={u.id}>
+                        {u.firstName} {u.lastName}
+                    </option>
+                ))}
             </select>
             <button style={{
                 marginBottom: "5rem",
@@ -84,8 +90,13 @@ export function App() {
                 posts
                     .filter(p => p.title.toLowerCase().includes(search.toLowerCase()) || p.body.toLowerCase().includes(search.toLowerCase()))
                     .map(p => {
-                        return <PostComponent key={p.id} postsItem={p} user={p.user}
-                                              onDelete={() => handleDelete(p.id)}/>
+                        return <PostComponent
+                            key={p.id}
+                            postsItem={p}
+                            user={p.user}
+                            onDelete={() => handleDelete(p.id)}
+                            currentUser={currentUser}
+                        />
                     })
             }
             {showPopup && (

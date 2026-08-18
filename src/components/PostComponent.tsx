@@ -8,6 +8,7 @@ interface PostProps {
     postsItem: PostsItem;
     user: User | undefined; // Using undefined in case there's no user by the post items userId
     onDelete: () => void;
+    currentUser: User | null;
 }
 
 export function PostComponent({postsItem, user, onDelete}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post

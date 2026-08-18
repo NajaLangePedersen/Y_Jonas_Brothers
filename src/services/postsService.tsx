@@ -24,9 +24,9 @@ export async function fetchPosts(): Promise<PostsItem[]> {
     return postsWithUsers;
 }
 
-export async function createPost(title: string, body: string, tags: string[]) {
+export async function createPost(title: string, body: string, tags: string[], userId: number | null) {
 
-    const randomUserId = Math.floor(Math.random()*70) +31;
+    const finalUserId = userId ?? Math.floor(Math.random()*70) +31;
 
     const res = await fetch("https://dummyjson.com/posts/add", {
         method: "POST",
@@ -37,7 +37,7 @@ export async function createPost(title: string, body: string, tags: string[]) {
             title: title,
             body: body,
             tags: tags,
-            userId: randomUserId
+            userId: finalUserId
         })
     });
 
