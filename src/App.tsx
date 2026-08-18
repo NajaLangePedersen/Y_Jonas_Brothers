@@ -60,11 +60,13 @@ export function App() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 style={{
-                    width: "100%",
-                    display: "block"
+                    width: "100%"
                 }}
             />
-            <select value={currentUser?.id ?? ""}
+            <select style={{
+                marginLeft: 0,
+                width: "20%"
+            }} value={currentUser?.id ?? ""}
                     onChange={(e) => {
                         const id = Number(e.target.value);
                         const user = users.find(u => u.id === id) || null;
