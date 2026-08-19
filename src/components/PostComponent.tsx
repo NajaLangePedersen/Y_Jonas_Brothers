@@ -52,7 +52,7 @@ export function PostComponent({postsItem, user, onDelete, currentUser}: PostProp
     }
 
     async function addComment(userId: number | null) {
-        const finalUserId = userId ?? Math.floor(Math.random()*70) +31;
+        const finalUserId = userId ?? Math.floor(Math.random() * 70) + 31;
 
         const res = await fetch('https://dummyjson.com/comments/add', {
             method: 'POST',
@@ -66,7 +66,15 @@ export function PostComponent({postsItem, user, onDelete, currentUser}: PostProp
 
         const comment = await res.json()
 
-        setComments(prevComments => [comment, ...prevComments])
+        const commentWithUser: Comment = {
+            id: Date.now(),
+            body: newComment,
+            postId: postsItem.id,
+            likes: 0,
+            user: currentUser!
+        };
+
+        setComments(prevComments => [commentWithUser, ...prevComments])
         setNewComment("")
     }
 
@@ -107,8 +115,10 @@ export function PostComponent({postsItem, user, onDelete, currentUser}: PostProp
                     <div key={c.id} className={"comments"}>
                         <p className={"commentsUserName"}>
                             {c.user
-                                ? <>{c.user.fullName}</>
-                                : <>Anonymous user</>}
+                                ? c.user.fullName
+                                    ? <>{c.user.fullName}</>
+                                    : <>{c.user.firstName} {c.user.lastName}</>
+                                : "Anonymous user"}
                         </p>
                         <p className={"margin0"}>
                             {c.body}
