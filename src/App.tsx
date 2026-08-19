@@ -4,12 +4,14 @@ import type {PostsItem, Root, Reactions} from "@/types/posts.tsx";
 import {PostComponent} from "@/components/PostComponent.tsx";
 import {fetchPosts, createPost, deletePost, deleteComment} from "@/services/postsService.tsx";
 import type {User} from "@/types/users.tsx";
+import type {Comment} from "@/types/comments.tsx";
 
 export function App() {
 
     const [currentUser, setCurrentUser] = useState<User | null>(null)
     const [users, setUsers] = useState<User[]>([])
     const [posts, setPosts] = useState<PostsItem[]>([])
+    const [commentsByPost, setCommentsByPost] = useState<Record<number, Comment[]>>({});
     const [search, setSearch] = useState("")
     const [showPopup, setShowPopup] = useState(false)
 

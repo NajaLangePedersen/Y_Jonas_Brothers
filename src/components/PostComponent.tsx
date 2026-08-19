@@ -11,7 +11,7 @@ interface PostProps {
     currentUser: User | null;
 }
 
-export function PostComponent({postsItem, user, onDelete}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
+export function PostComponent({postsItem, user, onDelete, currentUser}: PostProps) { //props are coming from App.tsx, whereas comments are coming from each post
     const [showComments, setShowComments] = useState(false); // Decides if comments are shown or not
     const [comments, setComments] = useState<Comment[]>([]); // Sets comments in each post
     const [commentsLoaded, setCommentsLoaded] = useState(false); //This keeps track of whether comments have been loaded.
@@ -26,7 +26,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
     async function fetchComments() {
         const res = await fetch(`https://dummyjson.com/comments/post/${postsItem.id}`);
         const json = await res.json();
-        setComments(json.comments);
+        setComments(Array.isArray(json.comments) ? json.comments : []);
     }
 
     // Fetch comments if the showComments state is true
@@ -51,14 +51,16 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
         buttonText = "Hide comments";
     }
 
-    async function addComment() {
+    async function addComment(userId: number | null) {
+        const finalUserId = userId ?? Math.floor(Math.random()*70) +31;
+
         const res = await fetch('https://dummyjson.com/comments/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 body: newComment,
                 postId: postsItem.id,
-                userId: Math.floor(Math.random()*70) +31,
+                userId: finalUserId,
             })
         })
 
@@ -93,7 +95,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
                     onChange={(e) => setNewComment(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
-                            addComment();
+                            addComment(currentUser?.id ?? null);
                             setCommentCount(prevCount => prevCount + 1)
                         }
                     }}
