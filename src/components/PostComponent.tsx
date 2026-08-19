@@ -68,14 +68,14 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
         setNewComment("")
     }
 
-    return <div style={{marginBottom: "5rem"}}>
+    return <div className={"post"}>
         {user
             ? <>{user.firstName} {user.lastName}</>
             : <>Anonymous user</>}
         <br></br>
-        <h2 style={{marginTop: "0.25rem"}}>{postsItem.title}</h2><br></br>
+        <h2 className={"h2s"}>{postsItem.title}</h2>
         {postsItem.body}<br></br><br></br>
-        <span style={{color: "rgb(0, 119, 204)"}}> {/*span is used to mark a small part of the content - usually for style*/}
+        <span className={"blue"}> {/*span is used to mark a small part of the content - usually for style*/}
             #{postsItem.tags.join(" #")}
         </span><br></br><br></br>
         <b>Views: {postsItem.views}</b>
@@ -83,10 +83,7 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
             buttonText}
         </button>
 
-        <button onClick={onDelete} style={{
-            color: "red",
-            borderColor: "red"
-        }}>Delete</button>
+        <button onClick={onDelete} className={"btnRed"}>Delete</button>
         {/*Comment section */}
         {showComments && (
             <div>
@@ -105,26 +102,15 @@ export function PostComponent({postsItem, user, onDelete}: PostProps) { //props 
                 it does not change the data; it turns each comment into JSX. */}
                 {comments.map(c => ( // each comment gets its own <div> and <p> which naturally moves it down to next line without the use of <br>
 
-                    <div key={c.id} style={{
-                        border: "2px solid lightGrey",
-                        borderRadius: "1rem",
-                        paddingLeft: "1rem",
-                        marginBottom: "1rem"
-                    }}>
-                        <p style={{fontSize: "12px", marginBottom: "0px"}}>
+                    <div key={c.id} className={"comments"}>
+                        <p className={"commentsUserName"}>
                             {c.user
                                 ? <>{c.user.fullName}</>
                                 : <>Anonymous user</>}
                         </p>
-                        <p style={{marginTop: "0px"}}>
+                        <p className={"margin0"}>
                             {c.body}
-                            <button onClick={() => handleDeleteComment(c.id)} style={{
-                                color: "red",
-                                border: "none",
-                                fontSize: "20px",
-                                backgroundColor: "transparent",
-                                marginLeft: 0
-                            }}>&#128465;</button>
+                            <button onClick={() => handleDeleteComment(c.id)} className={"btnTrash"}>&#128465;</button>
                         </p>
 
                     </div>

@@ -1,0 +1,87 @@
+.btnPopUpClose {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border-color: transparent;
+    color: grey;
+}
+
+.h2s {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.txtPopUp {
+    height: 2.2rem;
+    width: 25rem;
+    vertical-align: top;
+    margin-bottom: 1rem;
+}
+
+.txtPopUpLarge {
+    height: 7rem;
+    width: 25rem;
+    vertical-align: top;
+    margin-bottom: 1rem;
+}
+
+.width100 {
+    width: 100%;
+    margin-left: 0;
+}
+
+.width20 {
+    width: 20%;
+    margin-left: 0;
+}
+
+.popUp {
+    position: fixed;
+    top: 50%; /*places the top of the element halfway down the screen*/
+    left: 50%; /*places the left of the element halfway in the screen*/
+    transform: translate(-50%, -50%); /*the element is moved 50% of its own size back and up*/
+    background-color: white;
+    padding: 2rem 4rem 2rem 4rem;
+    border: 2px solid rgb(0, 119, 204);
+    border-radius: 5%;
+    text-align: center;
+}
+
+.post {
+    margin-top: 5rem;
+}
+
+.blue {
+    color: rgb(0, 119, 204);
+}
+
+.btnRed {
+    color: red;
+    border-color: red;
+}
+
+.btnTrash {
+    color: red;
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+    margin-left: 0;
+}
+
+.comments {
+    border: 2px solid lightGrey;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.commentsUserName {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.margin0 {
+    margin: 0;
+}
+

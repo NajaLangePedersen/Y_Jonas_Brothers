@@ -59,34 +59,24 @@ export function App() {
                 placeholder={"Search"}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                style={{
-                    width: "100%"
-                }}
+                className={"width100"}
             />
-            <select style={{
-                marginLeft: 0,
-                width: "20%"
-            }} value={currentUser?.id ?? ""}
+            <select className={"width20"}
+                    value={currentUser?.id ?? ""}
                     onChange={(e) => {
                         const id = Number(e.target.value);
                         const user = users.find(u => u.id === id) || null;
                         setCurrentUser(user);
 
-                    }}
-            >
+                    }}>
                 <option value="">Select user</option>
                 {users.map(u => (
                     <option key={u.id} value={u.id}>
                         {u.firstName} {u.lastName}
                     </option>
                 ))}
-            </select>
-            <button style={{
-                marginBottom: "5rem",
-                marginLeft: 0,
-                marginRight: 0,
-                width: "100%"
-            }} onClick={() => setShowPopup(true)}>Create post
+            </select><br></br>
+            <button className={"width100"} onClick={() => setShowPopup(true)}>Create post
             </button>
             {
                 posts
@@ -102,51 +92,26 @@ export function App() {
                     })
             }
             {showPopup && (
-                <div style={{
-                    position: "fixed",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "white",
-                    padding: "4rem",
-                    border: "2px solid rgb(0, 119, 204)",
-                    borderRadius: "5%",
-                    zIndex: 1000,
-                    textAlign: "center"
-                }}>
-                    <h2 style={{marginTop: "0", marginBottom: "1rem"}}>What's on your mind?</h2>
+                <div className={"popUp"}>
+                    <button className={"btnPopUpClose"} onClick={() => setShowPopup(false)}>X</button>
+                    <h2 className={"h2s"}>What's on your mind?</h2>
                     <textarea
                         placeholder={"Title"}
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        style={{
-                            height: "2.2rem",
-                            width: "25rem",
-                            verticalAlign: "top",
-                            marginBottom: "1rem"
-                        }}
+                        className={"txtPopUp"}
                     /><br></br>
                     <textarea
                         placeholder={"Body"}
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
-                        style={{
-                            height: "7rem",
-                            width: "25rem",
-                            verticalAlign: "top",
-                            marginBottom: "1rem"
-                        }}
+                        className={"txtPopUpLarge"}
                     /><br></br>
                     <textarea
                         placeholder={"Tags"}
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
-                        style={{
-                            height: "2.2rem",
-                            width: "25rem",
-                            verticalAlign: "top",
-                            marginBottom: "1rem"
-                        }}
+                        className={"txtPopUp"}
                     /><br></br>
                     <button onClick={handleCreatePost}>Create post</button>
                 </div>
